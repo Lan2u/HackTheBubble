@@ -9,6 +9,7 @@ import java.awt.*;
  * Created by aah4 on 08/10/16.
  */
 public class Bird extends Rectangle{
+
     public void update(float dT){
 
     }

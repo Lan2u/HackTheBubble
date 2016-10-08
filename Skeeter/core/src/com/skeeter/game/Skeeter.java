@@ -14,6 +14,7 @@ import com.skeeter.birds.Pheasant;
 import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 
 import java.awt.*;
+import java.awt.event.TextEvent;
 import java.util.ArrayList;
 
 /* Paul Lancaster + libGdx Gen
@@ -23,7 +24,7 @@ public class Skeeter extends ApplicationAdapter implements InputProcessor{
     // Only public thing avaliable outside of this class
     // List of all sprites currently in play
 
-	static ArrayList<Bird> sprites = new ArrayList<Bird>();
+	public static ArrayList<Bird> sprites = new ArrayList<Bird>();
 
     // Private not accessable outside of class
     private SpriteBatch batch;
@@ -42,21 +43,27 @@ public class Skeeter extends ApplicationAdapter implements InputProcessor{
         String bckPath = "backImg.png";
         String gunPath = "gun.png";
         String guyPath = "shooter.png";
+        String gunFiredPath = "gunFiring.png";
+        String phesantPath = "pheasantup.png";
 
         AssetManager assetManager = new AssetManager();
         assetManager.load(bckPath, Texture.class);
         assetManager.load(gunPath, Texture.class);
         assetManager.load(guyPath, Texture.class);
+        assetManager.load(gunFiredPath, Texture.class);
+        assetManager.load(phesantPath, Texture.class);
 
         assetManager.finishLoading(); // Block until all assets finished loading, TODO replace with a loading screen
         // TODO TEXTURES FOR SHOOTER AND GUN
         Texture shooterTex = assetManager.get(guyPath, Texture.class);
         Texture gunTex = assetManager.get(gunPath,Texture.class);
+        Texture gunFiredTex = assetManager.get(gunFiredPath, Texture.class);
+        Texture pTex = assetManager.get(phesantPath, Texture.class);
         backTex = assetManager.get(bckPath, Texture.class);
 
-        shooter = new Shooter(shooterTex,gunTex);
+        shooter = new Shooter(shooterTex,gunTex, gunFiredTex);
 
-        Pheasant pt = new Pheasant(new Texture("badlogic.jpg"), 700, 300, 60, 30);
+        Pheasant pt = new Pheasant(pTex, 700, 300, 60, 30);
         sprites.add(pt);
 
         //http://gamedev.stackexchange.com/questions/63326/libgdx-inputlistenner-not-working
@@ -82,7 +89,6 @@ public class Skeeter extends ApplicationAdapter implements InputProcessor{
 		for (Bird sprite: sprites){
 		    sprite.draw(batch);
         }
-
 
 		batch.end();
 	}
