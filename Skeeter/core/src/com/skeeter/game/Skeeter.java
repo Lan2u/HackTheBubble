@@ -48,7 +48,7 @@ public class Skeeter extends ApplicationAdapter implements InputProcessor{
         // Physics Update
         update(Gdx.graphics.getDeltaTime());
 
-        // Draw
+        // Drawing begins
 		batch.begin();
 
         batch.draw(backImg,0,0); // Draw the background image

@@ -18,8 +18,8 @@ public class Shooter extends GameSprite{
     private static final int GUN_WIDTH = 60;
     private static final int GUN_HEIGHT = 10;
 
-    private final int X_POS = 20; // The shooter doesn't move so theses are constants
-    private final int Y_POS = 20;
+    private final int X_POS = 100; // The shooter doesn't move so theses are constants
+    private final int Y_POS = 50;
 
     boolean gunFiring = false;
 
