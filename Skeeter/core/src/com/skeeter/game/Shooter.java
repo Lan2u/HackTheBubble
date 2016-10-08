@@ -13,7 +13,7 @@ import java.awt.*;
  */
 public class Shooter extends GameSprite{
 
-    private static final double GUN_FIRE_ANIMATION_TIME = 4; // In seconds
+    private static final double GUN_FIRE_ANIMATION_TIME = 0.5; // In seconds
 
     private final Point GUN_POINT = new Point(40,30); // Gun position
 
@@ -43,10 +43,13 @@ public class Shooter extends GameSprite{
 
     @Override
     public void draw(Batch batch){
-        batch.draw(guyTex, X_POS,Y_POS);
-        simpleGunDraw(batch,gunTex);
-        if (gunFiring){
-            // Draw a fire animation on the end of the gun
+        //batch.draw(guyTex, X_POS,Y_POS);
+
+        if (fireTimeLeft > 0){
+            // Gun is firing
+        }else{
+            // Gun isn't firing
+            simpleGunDraw(batch,gunTex);
         }
     }
 
@@ -63,7 +66,7 @@ public class Shooter extends GameSprite{
             fireTimeLeft = 0.0;
         }
 
-        rotation = calculateAngle(mouseAim,GUN_POINT);
+        gunAngle = calculateAngle(mouseAim,GUN_POINT);
     }
 
     // Calculate the angle of the gun (taking the gun position and the mouse position)
@@ -73,14 +76,10 @@ public class Shooter extends GameSprite{
         // Return it in degrees
         //http://stackoverflow.com/questions/3449826/how-do-i-find-the-inverse-tangent-of-a-line
         double dX = mouseAim.getX() - gun_point.getX();
-        System.out.println(dX);
         double dY = gun_point.getY() + 360 - mouseAim.getY();
-        System.out.println(dY);
 
         double angle = Math.atan2(dY, dX);
         angle = (angle * 180.0)/Math.PI;
-        //System.out.println(dX + " , " + dY + " : " + angle);
-        System.out.println(angle);
         if(angle>90)angle=90;
         if(angle<-30)angle=-30;
         return angle;
@@ -88,20 +87,17 @@ public class Shooter extends GameSprite{
 
     // Called when gun fired
     public void gunFired(){
-        // Calculate physics
-        for (GameSprite bird: Skeeter.sprites){ // For every bird
-            if (GameLogic.birdShot((Bird) bird, gunAngle)){ // If it was hit by the gun
-                bird.hit(); // Bird was hit
-            }else{
-                // Missed
+        if (!(fireTimeLeft > 0)) {
+            // Calculate physics
+            for (GameSprite bird : Skeeter.sprites) { // For every bird
+                if (GameLogic.birdShot((Bird) bird, gunAngle)) { // If it was hit by the gun
+                    bird.hit(); // Bird was hit
+                } else {
+                    // Missed
+                }
             }
+            // Display animation
+            fireTimeLeft = GUN_FIRE_ANIMATION_TIME;
         }
-        // Display animation
-        fireTimeLeft = System.nanoTime() + secondsToNano(GUN_FIRE_ANIMATION_TIME);
-    }
-
-    // convert from seconds to nano seconds
-    private long secondsToNano(double s) {
-        return (long) ( s * Math.pow(10.0,9.0));
     }
 }
