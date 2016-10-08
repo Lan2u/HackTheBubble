@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.skeeter.birds.Bird;
 import com.skeeter.birds.Pheasant;
+import com.skeeter.birds.PheasantOnSteroids;
 import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 
 import java.awt.*;
@@ -64,8 +65,18 @@ public class Skeeter extends ApplicationAdapter implements InputProcessor{
         shooter = new Shooter(shooterTex,gunTex, gunFiredTex);
 
         Pheasant pt = new Pheasant(pTex, 700, 300, 60, 30);
+        Pheasant pt2 = new Pheasant(pTex, 800, 300, 60, 30);
+        Pheasant pt3 = new Pheasant(pTex, 900, 300, 60, 30);
+        Pheasant pt4 = new Pheasant(pTex, 1100, 300, 60, 30);
+        Pheasant pt5 = new Pheasant(pTex, 2000, 300, 60, 30);
+        //PheasantOnSteroids ptS = new PheasantOnSteroids(pTex, 700, 300, 60,30);
         sprites.add(pt);
+        sprites.add(pt2);
+        sprites.add(pt3);
+        sprites.add(pt4);
+        sprites.add(pt5);
 
+        //sprites.add(ptS);
         //http://gamedev.stackexchange.com/questions/63326/libgdx-inputlistenner-not-working
         Gdx.input.setInputProcessor(this);
 	}
@@ -162,6 +173,7 @@ public class Skeeter extends ApplicationAdapter implements InputProcessor{
     }
 
     public static void gameOver() {
-        System.exit(1);
+        System.out.println("Game Over");
+
     }
 }
