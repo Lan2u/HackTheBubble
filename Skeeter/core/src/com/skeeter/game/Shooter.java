@@ -7,13 +7,15 @@ import com.skeeter.birds.Bird;
 import com.skeeter.phys.GameLogic;
 
 import java.awt.*;
+import java.awt.geom.Line2D;
 
 /**
  * Created by Paul Lancaster on 08/10/16
  */
 public class Shooter extends GameSprite{
 
-    private static final double GUN_FIRE_ANIMATION_TIME = 4; // In seconds
+    private static final double GUN_FIRE_ANIMATION_TIME = 0.5; // In seconds
+    private static final int FRAME_WIDTH = 800;
 
     private final Point GUN_POINT = new Point(40,30); // Gun position
 
@@ -23,41 +25,50 @@ public class Shooter extends GameSprite{
     private final int X_POS = 100; // The shooter doesn't move so theses are constants
     private final int Y_POS = 50;
 
-    private double rotation = 0.5;
-
-    boolean gunFiring = false;
-
     private double gunAngle;
-
-    private Texture guyTex;
     private Texture gunTex;
+    private Texture gunFTex;
     private double fireTimeLeft; // time until gun is finished firing
 
-    public Shooter(Texture guyTex, Texture gunTex) {
-        this.guyTex = guyTex;
+
+    public Shooter(Texture guyTex, Texture gunTex, Texture gunFiredTex) {
+        this.gunFTex = gunFiredTex;
         this.gunTex = gunTex;
         gunAngle = 0.5;
     }
 
     private void simpleGunDraw(Batch batch, Texture tex){ // Called to draw the gun, Simple because it only needs the texture
         int rotation = (int) Math.round(gunAngle);
-        batch.draw(tex, GUN_POINT.x, GUN_POINT.y, GUN_POINT.x, GUN_POINT.y,GUN_WIDTH,GUN_HEIGHT,
+        batch.draw(tex, GUN_POINT.x, GUN_POINT.y - (int)(getHeight()/2) , GUN_POINT.x , GUN_POINT.y,GUN_WIDTH,GUN_HEIGHT,
                 1f,1f,rotation,0,0,GUN_WIDTH,GUN_HEIGHT,false,false);
     }
 
     @Override
     public void draw(Batch batch){
-        batch.draw(guyTex, X_POS,Y_POS);
-        simpleGunDraw(batch,gunTex);
-        if (gunFiring){
-            // Draw a fire animation on the end of the gun
+        //batch.draw(guyTex, X_POS,Y_POS);
+
+        if (fireTimeLeft > 0){
+            simpleGunDraw(batch,gunFTex);
+        }else{
+            // Gun isn't firing
+            simpleGunDraw(batch,gunTex);
         }
+
     }
+
+/*
+    private void drawDebug(Batch batch) {
+        Texture debugTex = new Texture("/cs/home/pl59/HackTheBubble/Skeeter/core/assets/debug.png");
+        int rotation = (int) Math.round(gunAngle);
+        batch.draw(debugTex, GUN_POINT.x, GUN_POINT.y,(int)(gradient*GUN_POINT.x + GUN_POINT.x), GUN_POINT.y,1000,3,
+               1f,1f,rotation,0,0,1000,3,false,false);
+
+    }
+*/
 
     // @param deltaT , time between this and the last frame in seconds?
     public void update(double deltaT, Point mouseAim){
         gunAngle = calculateAngle(mouseAim, GUN_POINT);
-
         // If the gun is firing
         if (fireTimeLeft > 0.0) {
             // Gun is currently firing
@@ -67,7 +78,6 @@ public class Shooter extends GameSprite{
             fireTimeLeft = 0.0;
         }
 
-        rotation = calculateAngle(mouseAim,GUN_POINT);
     }
 
     // Calculate the angle of the gun (taking the gun position and the mouse position)
@@ -77,14 +87,10 @@ public class Shooter extends GameSprite{
         // Return it in degrees
         //http://stackoverflow.com/questions/3449826/how-do-i-find-the-inverse-tangent-of-a-line
         double dX = mouseAim.getX() - gun_point.getX();
-        System.out.println(dX);
         double dY = gun_point.getY() + 360 - mouseAim.getY();
-        System.out.println(dY);
 
         double angle = Math.atan2(dY, dX);
         angle = (angle * 180.0)/Math.PI;
-        //System.out.println(dX + " , " + dY + " : " + angle);
-        System.out.println(angle);
         if(angle>90)angle=90;
         if(angle<-30)angle=-30;
         return angle;
@@ -92,20 +98,17 @@ public class Shooter extends GameSprite{
 
     // Called when gun fired
     public void gunFired(){
-        // Calculate physics
-        for (GameSprite bird: Skeeter.sprites){ // For every bird
-            if (GameLogic.birdShot((Bird) bird, gunAngle)){ // If it was hit by the gun
-                bird.hit(); // Bird was hit
-            }else{
-                // Missed
+        if (!(fireTimeLeft > 0)) {
+            // Calculate physics
+            for (Bird bird : Skeeter.sprites) { // For every bird
+                if (GameLogic.bShot(GUN_POINT, bird, Math.toRadians(gunAngle))) { // If it was hit by the gun
+                    bird.hit(); // Bird was hit
+                } else {
+                    // Missed
+                }
             }
+            // Display animation
+            fireTimeLeft = GUN_FIRE_ANIMATION_TIME;
         }
-        // Display animation
-        fireTimeLeft = System.nanoTime() + secondsToNano(GUN_FIRE_ANIMATION_TIME);
-    }
-
-    // convert from seconds to nano seconds
-    private long secondsToNano(double s) {
-        return (long) ( s * Math.pow(10.0,9.0));
     }
 }
