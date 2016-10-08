@@ -21,6 +21,8 @@ public class Shooter extends GameSprite{
     private final int X_POS = 100; // The shooter doesn't move so theses are constants
     private final int Y_POS = 50;
 
+    private double rotation = 0.5;
+
     boolean gunFiring = false;
 
     private double gunAngle;
@@ -63,11 +65,14 @@ public class Shooter extends GameSprite{
         else if(fireTimeLeft < 0.0){ // Firing is finished so se the fire time left to 0
             fireTimeLeft = 0.0;
         }
+
+        rotation = calculateAngle(mouseAim,GUN_POINT);
     }
 
     // Calculate the angle of the gun (taking the gun position and the mouse position)
     // Only returns in the range 0.0-1.0
     private double calculateAngle(Point mouseAim, Point gun_point) {
+
         return 0.0;
     }
 

@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.TextureData;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -36,16 +37,18 @@ public class Skeeter extends ApplicationAdapter implements InputProcessor{
 		batch = new SpriteBatch();
 
         AssetManager assetManager = new AssetManager();
-        assetManager.load("assets/backgroundimage.png", Texture.class);
+        assetManager.load("/cs/home/pl59/HackTheBubble/Skeeter/core/assets/backgroundimage.png", Texture.class);
+        assetManager.load("/cs/home/pl59/HackTheBubble/Skeeter/core/assets/gun.png", Texture.class);
+        assetManager.load("/cs/home/pl59/HackTheBubble/Skeeter/core/assets/shooter.png", Texture.class);
 
         assetManager.finishLoading(); // Block until all assets finished loading, TODO replace with a loading screen
         // TODO TEXTURES FOR SHOOTER AND GUN
-        Texture shooterTex = new Texture("");
-        Texture gunTex = assetManager.get("assets/gunTex.png",Texture.class);
-        Texture backTex = new Texture();
+        Texture shooterTex = assetManager.get("/cs/home/pl59/HackTheBubble/Skeeter/core/assets/shooter.png", Texture.class);
+        Texture gunTex = assetManager.get("/cs/home/pl59/HackTheBubble/Skeeter/core/assets/gun.png",Texture.class);
+        backTex = assetManager.get("/cs/home/pl59/HackTheBubble/Skeeter/core/assets/backgroundimage.png", Texture.class);
 
         shooter = new Shooter(shooterTex,gunTex);
-        sprites.add(shooter);
+
 	}
 
 	@Override
@@ -53,8 +56,6 @@ public class Skeeter extends ApplicationAdapter implements InputProcessor{
 	public void render () {
 		Gdx.gl.glClearColor(1, 1, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-
 
         // Physics Update
         update(Gdx.graphics.getDeltaTime());
@@ -64,17 +65,22 @@ public class Skeeter extends ApplicationAdapter implements InputProcessor{
 
         batch.draw(backTex,0,0); // Draw the background image
 
+        shooter.draw(batch);
+
 		for (GameSprite sprite: sprites){
 		    sprite.draw(batch);
         }
+
+
 		batch.end();
 	}
 
 	// Called every frame before drawing to be used to update the physics on all the sprites in the game
-	private void update(float deltaT){
+	private void update(float deltaT){ // Delta T is the time difference between this and the last frame in seconds
 	    for (GameSprite sprite: sprites){ // Called each frame to allow the sprite to process the physics
 	        sprite.update(deltaT);
         }
+        shooter.update(deltaT,mouseAim);
     }
 	
 	@Override

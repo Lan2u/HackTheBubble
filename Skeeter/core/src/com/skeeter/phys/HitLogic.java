@@ -1,8 +1,11 @@
 package com.skeeter.phys;
 
+import com.skeeter.game.Bird;
+
 /**
  * Created by fc53 on 08/10/16.
  */
+/*
 public class GameLogic{
 
     public static boolean birdShot(Bird bird, double barrelAngle){
@@ -34,3 +37,4 @@ public class GameLogic{
         }
     }
 }
+*/

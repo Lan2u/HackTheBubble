@@ -1,5 +1,5 @@
 package com.skeeter.game;
-
+/*
 public class Bird{
 
     Bird(){
@@ -12,3 +12,4 @@ public class Bird{
     }
 
 }
+*/
