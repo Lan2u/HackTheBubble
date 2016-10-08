@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.Cursor;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.skeeter.birds.Bird;
 import com.skeeter.birds.Pheasant;
 import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 
@@ -22,7 +23,7 @@ public class Skeeter extends ApplicationAdapter implements InputProcessor{
     // Only public thing avaliable outside of this class
     // List of all sprites currently in play
 
-	static ArrayList<GameSprite> sprites = new ArrayList<GameSprite>();
+	static ArrayList<Bird> sprites = new ArrayList<Bird>();
 
     // Private not accessable outside of class
     private SpriteBatch batch;
@@ -55,8 +56,8 @@ public class Skeeter extends ApplicationAdapter implements InputProcessor{
 
         shooter = new Shooter(shooterTex,gunTex);
 
-        Pheasant pheasant = new Pheasant(new Texture("badlogic.jpg"));
-        sprites.add(pheasant);
+        Pheasant pt = new Pheasant(new Texture("badlogic.jpg"), 700, 300, 60, 30);
+        sprites.add(pt);
 
         //http://gamedev.stackexchange.com/questions/63326/libgdx-inputlistenner-not-working
         Gdx.input.setInputProcessor(this);
@@ -78,7 +79,7 @@ public class Skeeter extends ApplicationAdapter implements InputProcessor{
 
         shooter.draw(batch);
 
-		for (GameSprite sprite: sprites){
+		for (Bird sprite: sprites){
 		    sprite.draw(batch);
         }
 
@@ -88,7 +89,7 @@ public class Skeeter extends ApplicationAdapter implements InputProcessor{
 
 	// Called every frame before drawing to be used to update the physics on all the sprites in the game
 	private void update(float deltaT){ // Delta T is the time difference between this and the last frame in seconds
-	    for (GameSprite sprite: sprites){ // Called each frame to allow the sprite to process the physics
+	    for (Bird sprite: sprites){ // Called each frame to allow the sprite to process the physics
 	        sprite.update(deltaT);
         }
         shooter.update(deltaT,mouseAim);
