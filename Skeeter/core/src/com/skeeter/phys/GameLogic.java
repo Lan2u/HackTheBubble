@@ -8,6 +8,7 @@ import com.skeeter.birds.Bird;
 
 public class GameLogic{
 
+    //Checks if a bird's hitbox is in the line of the gun.
     public static boolean birdShot(Bird bird, double barrelAngle){
         boolean collision = false;
         for(int i = 0; i < bird.getWidth(); i ++){
@@ -20,6 +21,7 @@ public class GameLogic{
         return collision;
     }
 
+    //Checks if a bird object is off the screen
     public static boolean birdOffScreen(Bird bird){
         if(bird.getX() + bird.getWidth() < 0){
             return true;
@@ -28,6 +30,7 @@ public class GameLogic{
         }
     }
 
+    //Checks if an ostrich has hit the shooter ( has an x value less that the shooter)
     public static boolean hitByOstrich(Bird bird){
         if(bird.getX() < 100){
             return true;

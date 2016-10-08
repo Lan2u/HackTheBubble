@@ -38,15 +38,15 @@ public class Skeeter extends ApplicationAdapter implements InputProcessor{
         batch = new SpriteBatch();
 
         AssetManager assetManager = new AssetManager();
-        assetManager.load("/cs/home/pl59/HackTheBubble/Skeeter/core/assets/backgroundimage.png", Texture.class);
-        assetManager.load("/cs/home/pl59/HackTheBubble/Skeeter/core/assets/gun.png", Texture.class);
-        assetManager.load("/cs/home/pl59/HackTheBubble/Skeeter/core/assets/shooter.png", Texture.class);
+        assetManager.load("/cs/home/fc53/Documents/Hack The Bubble/Skeeter/core/assets/backgroundimage.png", Texture.class);
+        assetManager.load("/cs/home/fc53/Documents/Hack The Bubble/Skeeter/core/assets/gun.png", Texture.class);
+        assetManager.load("/cs/home/fc53/Documents/Hack The Bubble/Skeeter/core/assets/shooter.png", Texture.class);
 
         assetManager.finishLoading(); // Block until all assets finished loading, TODO replace with a loading screen
         // TODO TEXTURES FOR SHOOTER AND GUN
-        Texture shooterTex = assetManager.get("/cs/home/pl59/HackTheBubble/Skeeter/core/assets/shooter.png", Texture.class);
-        Texture gunTex = assetManager.get("/cs/home/pl59/HackTheBubble/Skeeter/core/assets/gun.png",Texture.class);
-        backTex = assetManager.get("/cs/home/pl59/HackTheBubble/Skeeter/core/assets/backgroundimage.png", Texture.class);
+        Texture shooterTex = assetManager.get("/cs/home/fc53/Documents/Hack The Bubble/Skeeter/core/assets/shooter.png", Texture.class);
+        Texture gunTex = assetManager.get("/cs/home/fc53/Documents/Hack The Bubble/Skeeter/core/assets/gun.png",Texture.class);
+        backTex = assetManager.get("/cs/home/fc53/Documents/Hack The Bubble/Skeeter/core/assets/backgroundimage.png", Texture.class);
 
         shooter = new Shooter(shooterTex,gunTex);
 
