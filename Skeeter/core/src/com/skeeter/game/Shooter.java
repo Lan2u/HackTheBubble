@@ -3,6 +3,7 @@ package com.skeeter.game;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.skeeter.birds.Bird;
 import com.skeeter.phys.GameLogic;
 
 import java.awt.*;
@@ -91,6 +92,8 @@ public class Shooter extends GameSprite{
         for (GameSprite bird: Skeeter.sprites){ // For every bird
             if (GameLogic.birdShot((Bird) bird, gunAngle)){ // If it was hit by the gun
                 bird.hit(); // Bird was hit
+            }else{
+                // Missed
             }
         }
         // Display animation

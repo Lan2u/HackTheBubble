@@ -14,6 +14,8 @@ import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 import java.awt.*;
 import java.util.ArrayList;
 
+/* Paul Lancaster + libGdx Gen
+*/
 public class Skeeter extends ApplicationAdapter implements InputProcessor{
 
     // Only public thing avaliable outside of this class

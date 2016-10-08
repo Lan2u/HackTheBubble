@@ -1,6 +1,6 @@
 package com.skeeter.phys;
 
-import com.skeeter.game.Bird;
+import com.skeeter.birds.Bird;
 
 /**
  * Created by fc53 on 08/10/16.
