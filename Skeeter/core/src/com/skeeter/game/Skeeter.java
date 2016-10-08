@@ -6,10 +6,13 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.*;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Cursor;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
 import com.skeeter.birds.Bird;
 import com.skeeter.birds.Pheasant;
 import com.skeeter.birds.PheasantOnSteroids;
@@ -40,10 +43,17 @@ public class Skeeter extends ApplicationAdapter implements InputProcessor{
 
     private static int gameState = 0; // Game state of game, 0 = start menu, 1= in game, 2 = game over
 
+    public static int score = 0;
+
+    private BitmapFont font;
+
 	@Override
 	// Called when the program starts (main)
 	public void create () {
         batch = new SpriteBatch();
+
+        font = new BitmapFont();
+        font.setColor(Color.RED);
 
         playButton = new Rectangle(0,0,400,300);
 
@@ -129,6 +139,8 @@ public class Skeeter extends ApplicationAdapter implements InputProcessor{
         for (Bird sprite : sprites) {
             sprite.draw(batch);
         }
+
+        font.draw(batch, String.valueOf(score),600, 100);
         batch.end();
     }
 
@@ -161,15 +173,6 @@ public class Skeeter extends ApplicationAdapter implements InputProcessor{
 
     @Override
     public boolean keyDown(int keycode) {
-        if (keycode == Input.Keys.SPACE&& gameState == 0){
-            System.out.println("Pressed");
-            if (playButton.contains(mouseAim)){
-                gameState = 1;
-            }
-        }
-        if (keycode == Input.Keys.SPACE){
-            fire();
-        }
         return false;
     }
     @Override
@@ -192,6 +195,15 @@ public class Skeeter extends ApplicationAdapter implements InputProcessor{
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        if (button == Input.Buttons.LEFT && gameState == 0){
+            System.out.println("Pressed");
+            if (playButton.contains(screenX,screenY)){
+                gameState = 1;
+            }
+        }
+        if (button == Input.Buttons.LEFT){
+            fire();
+        }
         return false;
     }
 
