@@ -2,23 +2,25 @@ package com.skeeter.phys;
 
 import com.skeeter.birds.Bird;
 
+import java.awt.*;
+import java.awt.geom.Line2D;
+import java.awt.geom.Point2D;
+
 /**
  * Created by fc53 on 08/10/16.
  */
 
 public class GameLogic{
 
-    //Checks if a bird's hitbox is in the line of the gun.
-    public static boolean birdShot(Bird bird, double barrelAngle){
-        for(int i = 0; i < bird.getWidth(); i ++){
-            for(int j = 0; j < bird.getHeight(); j++){
-                System.out.println((bird.getY() + j)/ (bird.getX() + i) + " , " + java.lang.Math.tan(barrelAngle));
-                if(((bird.getY() + j) / (bird.getX() + i)) == java.lang.Math.tan(barrelAngle)){
-                    return true;
-                }
-            }
-        }
-        return false;
+    private static final int FRAME_WIDTH = 800;
+
+    public static boolean bShot(Point gunPoint, Bird bird, double barrelAngle){
+        Line2D line = new Line2D.Double();
+        double m = Math.tan(barrelAngle);
+        System.out.println(m);
+        line.setLine(gunPoint, new Point(FRAME_WIDTH,(int) (FRAME_WIDTH * m)));
+
+        return bird.intersectsLine(line);
     }
 
     //Checks if a bird object is off the screen
