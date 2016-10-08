@@ -27,7 +27,7 @@ public class Skeeter extends ApplicationAdapter implements InputProcessor{
 	public static ArrayList<Bird> sprites = new ArrayList<Bird>();
 
 
-    // Private not accessable outside of class
+    // Private not accessible outside of class
     private SpriteBatch batch;
     private Texture backTex;
     private Texture menuTex;
@@ -53,12 +53,12 @@ public class Skeeter extends ApplicationAdapter implements InputProcessor{
 
         playButton = new Rectangle(0,0,400,300);
 
-        String bckPath = "backImg.png";
-        String gunPath = "gun.png";
-        String guyPath = "shooter.png";
-        String gunFiredPath = "gunFiring.png";
-        String phesantPath = "pheasantup.png";
-        String menuPath = "menubackground.png";
+        String bckPath = "core/assets/backImg.png";
+        String gunPath = "core/assets/gun.png";
+        String guyPath = "core/assets/shooter.png";
+        String gunFiredPath = "core/assets/gunFiring.png";
+        String phesantPath = "core/assets/pheasantup.png";
+        String menuPath = "core/assets/menubackground.png";
 
         AssetManager assetManager = new AssetManager();
         assetManager.load(bckPath, Texture.class);
