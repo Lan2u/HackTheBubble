@@ -23,10 +23,6 @@ public class Shooter extends GameSprite{
     private final int X_POS = 100; // The shooter doesn't move so theses are constants
     private final int Y_POS = 50;
 
-    private double rotation = 0.5;
-
-    boolean gunFiring = false;
-
     private double gunAngle;
 
     private Texture guyTex;
