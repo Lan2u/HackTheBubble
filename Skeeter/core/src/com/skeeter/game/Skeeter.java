@@ -8,27 +8,35 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 public class Skeeter extends ApplicationAdapter implements InputProcessor{
 
     // Only public thing avaliable outside of this class
     // List of all sprites currently in play
-	public static ArrayList<GameSprite> sprites = new ArrayList<GameSprite>();
+
+	static ArrayList<GameSprite> sprites = new ArrayList<GameSprite>();
 
     // Private not accessable outside of class
     private SpriteBatch batch;
     private Texture backImg;
 
-    private int aimX = 400, aimY = 400; // Cords of where the mouse is aiming
-    private double gunAngle = 0.5; // The angle of the gun in radians where 1 rad = 180 degrees and 0.5 rad = 90 degrees
-                                    // 0 rad is facing down, 1 rad is facing up
+    private Shooter shooter; // The shooter (includes their gun)
+
+    private Point mouseAim = new Point(400,400); // Point the mouse is aiming at
 
 
 	@Override
 	// Called when the program starts (main)
 	public void create () {
 		batch = new SpriteBatch();
+
+        // TODO TEXTURES FOR SHOOTER AND GUN
+        Texture shooterTex = new Texture("");
+        Texture gunTex = new Texture("");
+        shooter = new Shooter(shooterTex,gunTex);
+        sprites.add(shooter);
 	}
 
 	@Override
@@ -38,7 +46,7 @@ public class Skeeter extends ApplicationAdapter implements InputProcessor{
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         // Physics Update
-        update();
+        update(Gdx.graphics.getDeltaTime());
 
         // Draw
 		batch.begin();
@@ -51,9 +59,10 @@ public class Skeeter extends ApplicationAdapter implements InputProcessor{
 		batch.end();
 	}
 
-	private void update(){
+	// Called every frame before drawing to be used to update the physics on all the sprites in the game
+	private void update(float deltaT){
 	    for (GameSprite sprite: sprites){ // Called each frame to allow the sprite to process the physics
-	        sprite.update();
+	        sprite.update(deltaT);
         }
     }
 	
@@ -79,8 +88,8 @@ public class Skeeter extends ApplicationAdapter implements InputProcessor{
 
     @Override
     public boolean mouseMoved(int screenX, int screenY) {
-        aimX = screenX;
-        aimY = screenY;
+        mouseAim.x = screenX;
+        mouseAim.y = screenY;
         return true;
     }
 
