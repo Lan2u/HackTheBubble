@@ -7,19 +7,14 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Cursor;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.skeeter.birds.Bird;
-import com.skeeter.birds.Pheasant;
-import com.skeeter.birds.PheasantOnSteroids;
-import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
+import com.skeeter.birds.Birdy;
 
 import java.awt.*;
-import java.awt.event.TextEvent;
 import java.util.ArrayList;
 
 /* Paul Lancaster + libGdx Gen
@@ -30,6 +25,7 @@ public class Skeeter extends ApplicationAdapter implements InputProcessor{
     // List of all sprites currently in play
 
 	public static ArrayList<Bird> sprites = new ArrayList<Bird>();
+
 
     // Private not accessable outside of class
     private SpriteBatch batch;
@@ -46,6 +42,8 @@ public class Skeeter extends ApplicationAdapter implements InputProcessor{
     public static int score = 0;
 
     private BitmapFont font;
+
+    public static double acc;
 
 	@Override
 	// Called when the program starts (main)
@@ -83,11 +81,11 @@ public class Skeeter extends ApplicationAdapter implements InputProcessor{
 
         shooter = new Shooter(shooterTex,gunTex, gunFiredTex);
 
-        Pheasant pt = new Pheasant(pTex, 700, 300, 60, 30);
-        Pheasant pt2 = new Pheasant(pTex, 800, 300, 60, 30);
-        Pheasant pt3 = new Pheasant(pTex, 900, 300, 60, 30);
-        Pheasant pt4 = new Pheasant(pTex, 1100, 300, 60, 30);
-        Pheasant pt5 = new Pheasant(pTex, 2000, 300, 60, 30);
+        Birdy pt = new Birdy(pTex, 700, 300, 60, 30);
+        Birdy pt2 = new Birdy(pTex, 800, 300, 60, 30);
+        Birdy pt3 = new Birdy(pTex, 900, 300, 60, 30);
+        Birdy pt4 = new Birdy(pTex, 1100, 300, 60, 30);
+        Birdy pt5 = new Birdy(pTex, 2000, 300, 60, 30);
         //PheasantOnSteroids ptS = new PheasantOnSteroids(pTex, 700, 300, 60,30);
         sprites.add(pt);
         sprites.add(pt2);
@@ -98,6 +96,8 @@ public class Skeeter extends ApplicationAdapter implements InputProcessor{
         //sprites.add(ptS);
         //http://gamedev.stackexchange.com/questions/63326/libgdx-inputlistenner-not-working
         Gdx.input.setInputProcessor(this);
+
+        acc = 0.6;
 	}
 
 	@Override
@@ -145,7 +145,10 @@ public class Skeeter extends ApplicationAdapter implements InputProcessor{
     }
 
     private void renderEnd(Batch batch){
-
+        batch.begin();
+        batch.draw(backTex,0,0);
+        font.draw(batch, " Your score was " + score + " :D , click to restart", 300,200);
+        batch.end();
     }
 
 	// Called every frame before drawing to be used to update the physics on all the sprites in the game
@@ -201,9 +204,20 @@ public class Skeeter extends ApplicationAdapter implements InputProcessor{
                 gameState = 1;
             }
         }
-        if (button == Input.Buttons.LEFT){
-            fire();
+        if (button == Input.Buttons.LEFT ){
+            if (gameState == 1) {
+                fire();
+            }
+            if (gameState == 2){
+                for (Bird bird: sprites){
+                    bird.kill();
+                    Skeeter.acc = 0;
+                    Skeeter.score = 0;
+                }
+                gameState = 0;
+            }
         }
+
         return false;
     }
 

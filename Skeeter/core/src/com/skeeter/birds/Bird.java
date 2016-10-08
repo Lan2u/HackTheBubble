@@ -19,4 +19,7 @@ public class Bird extends Rectangle{
     public void hit(){
 
     }
+    public void kill(){
+
+    }
 }

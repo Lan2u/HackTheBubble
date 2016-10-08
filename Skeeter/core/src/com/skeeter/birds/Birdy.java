@@ -10,7 +10,7 @@ import java.util.Random;
 /**
  * Created by Paul Lancaster on 08/10/16
  */
-public class Pheasant extends Bird{
+public class Birdy extends Bird{
     private static final double X_SPAWN_RANGE = 400;
     private static final double Y_SPAWN_RANGE = 200;
     Texture pheasantTexture;
@@ -20,13 +20,18 @@ public class Pheasant extends Bird{
     private double x, y;
     private Random randomGenerator = new Random();
 
-    public Pheasant(Texture t, int x, int y, int width, int h){
+    public Birdy(Texture t, int x, int y, int width, int h){
         dx = -40; // Velocity
         acc = -0.6; // Rate the bird speeds up (carries across bird death)
         pheasantTexture = t;
         this.x = x;
         this.y = y;
         setBounds(x,y,width,h);
+    }
+
+    @Override
+    public void kill(){
+        died();
     }
 
     public Rectangle getRect(){
@@ -45,6 +50,7 @@ public class Pheasant extends Bird{
         if (Math.random() < 0.9){
             isWavey = false;
         }else{
+            System.out.println("Wavey");
             isWavey = true;
         }
         x = 700 + Math.random() * X_SPAWN_RANGE;
@@ -58,16 +64,20 @@ public class Pheasant extends Bird{
             ddy = 0;
         }else{ // Non linear path
             if (y <200){
-                ddy = 0.5 + (randomGenerator.nextInt(11)/10);
+                ddy = 0.5 + (randomGenerator.nextInt(8)/10.0);
             }else{
-                ddy = -0.5 - (randomGenerator.nextInt(11)/10);
+                ddy = -0.5 - (randomGenerator.nextInt(8)/10.0);
             }
         }
 
-        y += ddy;
-        dx += acc * dT;
+        dy += ddy;
+        y += dy;
+        dx += Skeeter.acc * dT;
         x = x + dx * dT;
-        y = y + dy * dT;
+        //y = y + dy * dT;
+        if (y <= 0 || y >= 450){
+            died();
+        }
 
         setLocation((int)x,(int)y);
 
