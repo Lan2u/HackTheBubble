@@ -20,6 +20,11 @@ public class Skeeter extends ApplicationAdapter implements InputProcessor{
     private SpriteBatch batch;
     private Texture backImg;
 
+    private int aimX = 400, aimY = 400; // Cords of where the mouse is aiming
+    private double gunAngle = 0.5; // The angle of the gun in radians where 1 rad = 180 degrees and 0.5 rad = 90 degrees
+                                    // 0 rad is facing down, 1 rad is facing up
+
+
 	@Override
 	// Called when the program starts (main)
 	public void create () {
@@ -61,6 +66,12 @@ public class Skeeter extends ApplicationAdapter implements InputProcessor{
 
 	/* INPUT PROCESSING */
 
+	// Fire the gun
+	private void fire(){
+
+	    // Call the fire method from the physics class providing it with the angle of the gun in radians
+    }
+
     @Override
     public boolean keyDown(int keycode) {
         return false;
@@ -68,10 +79,12 @@ public class Skeeter extends ApplicationAdapter implements InputProcessor{
 
     @Override
     public boolean mouseMoved(int screenX, int screenY) {
-        return false;
+        aimX = screenX;
+        aimY = screenY;
+        return true;
     }
 
-    // Not required but had to be added
+    // Not required but had to be added (other input handling that may or may not be used in future)
     @Override
     public boolean keyUp(int keycode) {
         return false;
@@ -96,8 +109,6 @@ public class Skeeter extends ApplicationAdapter implements InputProcessor{
     public boolean touchDragged(int screenX, int screenY, int pointer) {
         return false;
     }
-
-
 
     @Override
     public boolean scrolled(int amount) {
