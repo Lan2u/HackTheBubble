@@ -37,16 +37,20 @@ public class Skeeter extends ApplicationAdapter implements InputProcessor{
 	public void create () {
         batch = new SpriteBatch();
 
+        String bckPath = "/core/assets/backImg.png";
+        String gunPath = "/core/assets/gun.png";
+        String guyPath = "/core/assets/shooter.png";
+
         AssetManager assetManager = new AssetManager();
-        assetManager.load("/cs/home/pl59/HackTheBubble/Skeeter/core/assets/backgroundimage.png", Texture.class);
-        assetManager.load("/cs/home/pl59/HackTheBubble/Skeeter/core/assets/gun.png", Texture.class);
-        assetManager.load("/cs/home/pl59/HackTheBubble/Skeeter/core/assets/shooter.png", Texture.class);
+        assetManager.load(bckPath, Texture.class);
+        assetManager.load(gunPath, Texture.class);
+        assetManager.load(guyPath, Texture.class);
 
         assetManager.finishLoading(); // Block until all assets finished loading, TODO replace with a loading screen
         // TODO TEXTURES FOR SHOOTER AND GUN
-        Texture shooterTex = assetManager.get("/cs/home/pl59/HackTheBubble/Skeeter/core/assets/shooter.png", Texture.class);
-        Texture gunTex = assetManager.get("/cs/home/pl59/HackTheBubble/Skeeter/core/assets/gun.png",Texture.class);
-        backTex = assetManager.get("/cs/home/pl59/HackTheBubble/Skeeter/core/assets/backgroundimage.png", Texture.class);
+        Texture shooterTex = assetManager.get(guyPath, Texture.class);
+        Texture gunTex = assetManager.get(gunPath,Texture.class);
+        backTex = assetManager.get(bckPath, Texture.class);
 
         shooter = new Shooter(shooterTex,gunTex);
 
