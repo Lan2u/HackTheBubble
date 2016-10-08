@@ -11,12 +11,14 @@ public class Skeeter extends ApplicationAdapter {
 	Texture img;
 	
 	@Override
+	// called when the program starts (main)
 	public void create () {
 		batch = new SpriteBatch();
 		img = new Texture("badlogic.jpg");
 	}
 
 	@Override
+	//called every frame
 	public void render () {
 		Gdx.gl.glClearColor(1, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -26,6 +28,7 @@ public class Skeeter extends ApplicationAdapter {
 	}
 	
 	@Override
+	//called at end of game
 	public void dispose () {
 		batch.dispose();
 		img.dispose();
