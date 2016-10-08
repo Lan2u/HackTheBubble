@@ -7,6 +7,7 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.Cursor;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.skeeter.birds.Bird;
@@ -30,22 +31,28 @@ public class Skeeter extends ApplicationAdapter implements InputProcessor{
     // Private not accessable outside of class
     private SpriteBatch batch;
     private Texture backTex;
+    private Texture menuTex;
+    private Rectangle playButton;
 
     private Shooter shooter; // The shooter (includes their gun)
 
     private Point mouseAim = new Point(400,400); // Point the mouse is aiming at
 
+    private static int gameState = 0; // Game state of game, 0 = start menu, 1= in game, 2 = game over
 
 	@Override
 	// Called when the program starts (main)
 	public void create () {
         batch = new SpriteBatch();
 
+        playButton = new Rectangle(0,0,400,300);
+
         String bckPath = "backImg.png";
         String gunPath = "gun.png";
         String guyPath = "shooter.png";
         String gunFiredPath = "gunFiring.png";
         String phesantPath = "pheasantup.png";
+        String menuPath = "menubackground.png";
 
         AssetManager assetManager = new AssetManager();
         assetManager.load(bckPath, Texture.class);
@@ -53,6 +60,7 @@ public class Skeeter extends ApplicationAdapter implements InputProcessor{
         assetManager.load(guyPath, Texture.class);
         assetManager.load(gunFiredPath, Texture.class);
         assetManager.load(phesantPath, Texture.class);
+        assetManager.load(menuPath,Texture.class);
 
         assetManager.finishLoading(); // Block until all assets finished loading, TODO replace with a loading screen
         // TODO TEXTURES FOR SHOOTER AND GUN
@@ -60,6 +68,7 @@ public class Skeeter extends ApplicationAdapter implements InputProcessor{
         Texture gunTex = assetManager.get(gunPath,Texture.class);
         Texture gunFiredTex = assetManager.get(gunFiredPath, Texture.class);
         Texture pTex = assetManager.get(phesantPath, Texture.class);
+        menuTex = assetManager.get(menuPath, Texture.class);
         backTex = assetManager.get(bckPath, Texture.class);
 
         shooter = new Shooter(shooterTex,gunTex, gunFiredTex);
@@ -87,22 +96,45 @@ public class Skeeter extends ApplicationAdapter implements InputProcessor{
 		Gdx.gl.glClearColor(1, 1, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+        switch(gameState) {
+            case 0: {
+                renderMenu(batch);
+                break;
+            }
+            case 1: {
+                renderGame(batch);
+                break;
+            }
+            case 2: {
+                renderEnd(batch);
+                break;
+            }
+            default:
+                System.out.println("Invalid game state " +gameState);
+        }
+	}
+	private void renderMenu(Batch batch){
+	    batch.begin();
+        batch.draw(menuTex,0,0);
+        batch.end();
+    }
+
+	private void renderGame(Batch batch){
         // Physics Update
         update(Gdx.graphics.getDeltaTime());
-
         // Drawing begins
-		batch.begin();
-
-        batch.draw(backTex,0,0); // Draw the background image
-
+        batch.begin();
+        batch.draw(backTex, 0, 0); // Draw the background image
         shooter.draw(batch);
-
-		for (Bird sprite: sprites){
-		    sprite.draw(batch);
+        for (Bird sprite : sprites) {
+            sprite.draw(batch);
         }
+        batch.end();
+    }
 
-		batch.end();
-	}
+    private void renderEnd(Batch batch){
+
+    }
 
 	// Called every frame before drawing to be used to update the physics on all the sprites in the game
 	private void update(float deltaT){ // Delta T is the time difference between this and the last frame in seconds
@@ -117,7 +149,7 @@ public class Skeeter extends ApplicationAdapter implements InputProcessor{
 	public void dispose () {
 		batch.dispose();
 		backTex.dispose();
-
+        menuTex.dispose();
 	}
 
 	/* INPUT PROCESSING */
@@ -129,6 +161,12 @@ public class Skeeter extends ApplicationAdapter implements InputProcessor{
 
     @Override
     public boolean keyDown(int keycode) {
+        if (keycode == Input.Keys.SPACE&& gameState == 0){
+            System.out.println("Pressed");
+            if (playButton.contains(mouseAim)){
+                gameState = 1;
+            }
+        }
         if (keycode == Input.Keys.SPACE){
             fire();
         }
@@ -174,6 +212,6 @@ public class Skeeter extends ApplicationAdapter implements InputProcessor{
 
     public static void gameOver() {
         System.out.println("Game Over");
-
+        gameState = 2;
     }
 }

@@ -9,6 +9,7 @@ public class DesktopLauncher {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		config.width = 800; // Application width
         config.height = 450; // Application height
+        config.resizable = false;
         // 800 by 450 pixels
 		new LwjglApplication(new Skeeter(), config);
 	}
