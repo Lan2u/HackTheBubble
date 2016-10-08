@@ -3,6 +3,7 @@ package com.skeeter.game;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.skeeter.phys.GameLogic;
 
 import java.awt.*;
 
@@ -87,6 +88,11 @@ public class Shooter extends GameSprite{
     // Called when gun fired
     public void gunFired(){
         // Calculate physics
+        for (GameSprite bird: Skeeter.sprites){ // For every bird
+            if (GameLogic.birdShot((Bird) bird, gunAngle)){ // If it was hit by the gun
+                bird.hit(); // Bird was hit
+            }
+        }
         // Display animation
         fireTimeLeft = System.nanoTime() + secondsToNano(GUN_FIRE_ANIMATION_TIME);
     }

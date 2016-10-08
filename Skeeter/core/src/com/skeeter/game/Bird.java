@@ -5,5 +5,4 @@ package com.skeeter.game;
  */
 public class Bird extends GameSprite{
 
-
 }

@@ -21,4 +21,8 @@ public class GameSprite extends Sprite {
     public void dispose(){
 
     }
+
+    public void hit() {
+        System.out.println("hit");
+    }
 }

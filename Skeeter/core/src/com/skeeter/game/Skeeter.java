@@ -19,7 +19,7 @@ public class Skeeter extends ApplicationAdapter implements InputProcessor{
     // Only public thing avaliable outside of this class
     // List of all sprites currently in play
 
-	private static ArrayList<GameSprite> sprites = new ArrayList<GameSprite>();
+	static ArrayList<GameSprite> sprites = new ArrayList<GameSprite>();
 
     // Private not accessable outside of class
     private SpriteBatch batch;
