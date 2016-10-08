@@ -10,15 +10,15 @@ public class GameLogic{
 
     //Checks if a bird's hitbox is in the line of the gun.
     public static boolean birdShot(Bird bird, double barrelAngle){
-        boolean collision = false;
         for(int i = 0; i < bird.getWidth(); i ++){
-            for(int j = 0; i < bird.getHeight(); j++){
+            for(int j = 0; j < bird.getHeight(); j++){
+                System.out.println((bird.getY() + j)/ (bird.getX() + i) + " , " + java.lang.Math.tan(barrelAngle));
                 if(((bird.getY() + j) / (bird.getX() + i)) == java.lang.Math.tan(barrelAngle)){
-                    collision = true;
+                    return true;
                 }
             }
         }
-        return collision;
+        return false;
     }
 
     //Checks if a bird object is off the screen

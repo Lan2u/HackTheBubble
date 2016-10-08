@@ -98,7 +98,7 @@ public class Shooter extends GameSprite{
         if (!(fireTimeLeft > 0)) {
             // Calculate physics
             for (GameSprite bird : Skeeter.sprites) { // For every bird
-                if (GameLogic.birdShot((Bird) bird, gunAngle)) { // If it was hit by the gun
+                if (GameLogic.birdShot((Bird) bird, Math.toRadians(gunAngle))) { // If it was hit by the gun
                     bird.hit(); // Bird was hit
                 } else {
                     // Missed
