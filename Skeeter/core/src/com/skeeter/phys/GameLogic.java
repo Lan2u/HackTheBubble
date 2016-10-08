@@ -15,10 +15,11 @@ public class GameLogic{
     private static final int FRAME_WIDTH = 800;
 
     public static boolean bShot(Point gunPoint, Bird bird, double barrelAngle){
-        Line2D line = new Line2D.Double();
+
         double m = Math.tan(barrelAngle);
         System.out.println(m);
-        line.setLine(gunPoint, new Point(FRAME_WIDTH,(int) (FRAME_WIDTH * m)));
+        Line2D line = new Line2D.Double();
+        line.setLine(gunPoint.x, gunPoint.y, FRAME_WIDTH, (int)(FRAME_WIDTH * m));
 
         return bird.intersectsLine(line);
     }

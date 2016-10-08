@@ -2,6 +2,7 @@ package com.skeeter.birds;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.skeeter.game.Skeeter;
 
 import java.awt.*;
 
@@ -32,6 +33,9 @@ public class Pheasant extends Bird{
     public void update(float dT){
         // Every frame
         x = (int) (x + dx * dT);
+        if (x <= 0){
+            Skeeter.gameOver();
+        }
     }
 
     @Override

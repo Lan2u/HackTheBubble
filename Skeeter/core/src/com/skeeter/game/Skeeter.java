@@ -154,4 +154,8 @@ public class Skeeter extends ApplicationAdapter implements InputProcessor{
     public boolean scrolled(int amount) {
         return false;
     }
+
+    public static void gameOver() {
+        System.exit(1);
+    }
 }

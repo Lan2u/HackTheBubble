@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.skeeter.birds.Bird;
 import com.skeeter.phys.GameLogic;
 
-import javax.sound.sampled.Line;
 import java.awt.*;
 import java.awt.geom.Line2D;
 
@@ -16,6 +15,7 @@ import java.awt.geom.Line2D;
 public class Shooter extends GameSprite{
 
     private static final double GUN_FIRE_ANIMATION_TIME = 0.5; // In seconds
+    private static final int FRAME_WIDTH = 800;
 
     private final Point GUN_POINT = new Point(40,30); // Gun position
 
@@ -26,22 +26,20 @@ public class Shooter extends GameSprite{
     private final int Y_POS = 50;
 
     private double gunAngle;
-
-    private Texture guyTex;
     private Texture gunTex;
+    private Texture gunFTex;
     private double fireTimeLeft; // time until gun is finished firing
 
-    private Line2D gunRayTrace;
 
-    public Shooter(Texture guyTex, Texture gunTex) {
-        this.guyTex = guyTex;
+    public Shooter(Texture guyTex, Texture gunTex, Texture gunFiredTex) {
+        this.gunFTex = gunFiredTex;
         this.gunTex = gunTex;
         gunAngle = 0.5;
     }
 
     private void simpleGunDraw(Batch batch, Texture tex){ // Called to draw the gun, Simple because it only needs the texture
         int rotation = (int) Math.round(gunAngle);
-        batch.draw(tex, GUN_POINT.x, GUN_POINT.y - (int)(getHeight()/2) , GUN_POINT.x, GUN_POINT.y,GUN_WIDTH,GUN_HEIGHT,
+        batch.draw(tex, GUN_POINT.x, GUN_POINT.y - (int)(getHeight()/2) , GUN_POINT.x , GUN_POINT.y,GUN_WIDTH,GUN_HEIGHT,
                 1f,1f,rotation,0,0,GUN_WIDTH,GUN_HEIGHT,false,false);
     }
 
@@ -50,23 +48,23 @@ public class Shooter extends GameSprite{
         //batch.draw(guyTex, X_POS,Y_POS);
 
         if (fireTimeLeft > 0){
-            // Gun is firing
+            simpleGunDraw(batch,gunFTex);
         }else{
             // Gun isn't firing
             simpleGunDraw(batch,gunTex);
         }
 
-        //drawDebug(batch);
-
     }
 
-    /*
+/*
     private void drawDebug(Batch batch) {
         Texture debugTex = new Texture("/cs/home/pl59/HackTheBubble/Skeeter/core/assets/debug.png");
         int rotation = (int) Math.round(gunAngle);
-        batch.draw(debugTex, GUN_POINT.x, GUN_POINT.y, GUN_POINT.x, GUN_POINT.y,1000,3,
-                1f,1f,rotation,0,0,1000,3,false,false);
-    } */
+        batch.draw(debugTex, GUN_POINT.x, GUN_POINT.y,(int)(gradient*GUN_POINT.x + GUN_POINT.x), GUN_POINT.y,1000,3,
+               1f,1f,rotation,0,0,1000,3,false,false);
+
+    }
+*/
 
     // @param deltaT , time between this and the last frame in seconds?
     public void update(double deltaT, Point mouseAim){
@@ -80,7 +78,6 @@ public class Shooter extends GameSprite{
             fireTimeLeft = 0.0;
         }
 
-        gunAngle = calculateAngle(mouseAim,GUN_POINT);
     }
 
     // Calculate the angle of the gun (taking the gun position and the mouse position)
