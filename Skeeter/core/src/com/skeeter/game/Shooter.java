@@ -15,8 +15,8 @@ public class Shooter extends GameSprite{
 
     private final Point GUN_POINT = new Point(40,30); // Gun position
 
-    private static final int GUN_WIDTH = 64;
-    private static final int GUN_HEIGHT = 40;
+    private static final int GUN_WIDTH = 150;
+    private static final int GUN_HEIGHT = 53;
 
     private final int X_POS = 100; // The shooter doesn't move so theses are constants
     private final int Y_POS = 50;
@@ -75,10 +75,10 @@ public class Shooter extends GameSprite{
         // Return it in degrees
         //http://stackoverflow.com/questions/3449826/how-do-i-find-the-inverse-tangent-of-a-line
         double dX = mouseAim.getX() - gun_point.getX();
-        double dY = mouseAim.getY() - gun_point.getY();
+        double dY = gun_point.getY()- mouseAim.getY();
 
         double angle = Math.atan2(dY, dX);
-        angle = 90 - Math.toDegrees(angle);
+        angle = (angle * 180.0)/Math.PI;
         //System.out.println(dX + " , " + dY + " : " + angle);
         System.out.println(angle);
         return angle;
