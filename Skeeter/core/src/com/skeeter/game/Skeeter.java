@@ -19,7 +19,7 @@ public class Skeeter extends ApplicationAdapter implements InputProcessor{
     // Only public thing avaliable outside of this class
     // List of all sprites currently in play
 
-	static ArrayList<GameSprite> sprites = new ArrayList<GameSprite>();
+	private static ArrayList<GameSprite> sprites = new ArrayList<GameSprite>();
 
     // Private not accessable outside of class
     private SpriteBatch batch;
@@ -36,11 +36,12 @@ public class Skeeter extends ApplicationAdapter implements InputProcessor{
 		batch = new SpriteBatch();
 
         AssetManager assetManager = new AssetManager();
-        assetManager.load();
+        assetManager.load("assets/backgroundimage.png", Texture.class);
 
+        assetManager.finishLoading(); // Block until all assets finished loading, TODO replace with a loading screen
         // TODO TEXTURES FOR SHOOTER AND GUN
         Texture shooterTex = new Texture("");
-        Texture gunTex = new Texture("");
+        Texture gunTex = assetManager.get("assets/gunTex.png",Texture.class);
         Texture backTex = new Texture();
 
         shooter = new Shooter(shooterTex,gunTex);
@@ -50,8 +51,10 @@ public class Skeeter extends ApplicationAdapter implements InputProcessor{
 	@Override
 	// Called every frame
 	public void render () {
-		Gdx.gl.glClearColor(1, 0, 0, 1);
+		Gdx.gl.glClearColor(1, 1, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+
 
         // Physics Update
         update(Gdx.graphics.getDeltaTime());
