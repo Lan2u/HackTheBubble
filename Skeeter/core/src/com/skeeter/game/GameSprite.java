@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 /**
  * Created by Paul Lancaster on 08/10/16
  */
-public abstract class GameSprite extends Sprite {
+public class GameSprite extends Sprite {
 
     @Override
     public void draw(Batch batch){
@@ -15,6 +15,10 @@ public abstract class GameSprite extends Sprite {
     }
 
     public void update(float deltaT){
+
+    }
+
+    public void dispose(){
 
     }
 }

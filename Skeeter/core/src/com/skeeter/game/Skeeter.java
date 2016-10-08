@@ -2,9 +2,12 @@ package com.skeeter.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.TextureData;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -20,7 +23,7 @@ public class Skeeter extends ApplicationAdapter implements InputProcessor{
 
     // Private not accessable outside of class
     private SpriteBatch batch;
-    private Texture backImg;
+    private Texture backTex;
 
     private Shooter shooter; // The shooter (includes their gun)
 
@@ -32,9 +35,14 @@ public class Skeeter extends ApplicationAdapter implements InputProcessor{
 	public void create () {
 		batch = new SpriteBatch();
 
+        AssetManager assetManager = new AssetManager();
+        assetManager.load();
+
         // TODO TEXTURES FOR SHOOTER AND GUN
         Texture shooterTex = new Texture("");
         Texture gunTex = new Texture("");
+        Texture backTex = new Texture();
+
         shooter = new Shooter(shooterTex,gunTex);
         sprites.add(shooter);
 	}
@@ -51,7 +59,7 @@ public class Skeeter extends ApplicationAdapter implements InputProcessor{
         // Drawing begins
 		batch.begin();
 
-        batch.draw(backImg,0,0); // Draw the background image
+        batch.draw(backTex,0,0); // Draw the background image
 
 		for (GameSprite sprite: sprites){
 		    sprite.draw(batch);
@@ -70,22 +78,24 @@ public class Skeeter extends ApplicationAdapter implements InputProcessor{
 	// Called at end of game
 	public void dispose () {
 		batch.dispose();
-		backImg.dispose();
+		backTex.dispose();
+
 	}
 
 	/* INPUT PROCESSING */
 
 	// Fire the gun
 	private void fire(){
-
-	    // Call the fire method from the physics class providing it with the angle of the gun in radians
+	    shooter.gunFired();
     }
 
     @Override
     public boolean keyDown(int keycode) {
+        if (keycode == Input.Keys.SPACE){
+            fire();
+        }
         return false;
     }
-
     @Override
     public boolean mouseMoved(int screenX, int screenY) {
         mouseAim.x = screenX;
