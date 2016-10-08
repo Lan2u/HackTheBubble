@@ -51,12 +51,20 @@ public class Shooter extends GameSprite{
             // Gun isn't firing
             simpleGunDraw(batch,gunTex);
         }
+        drawDebug(batch);
+
+    }
+
+    private void drawDebug(Batch batch) {
+        Texture debugTex = new Texture("/cs/home/pl59/HackTheBubble/Skeeter/core/assets/debug.png");
+        int rotation = (int) Math.round(gunAngle);
+        batch.draw(debugTex, GUN_POINT.x, GUN_POINT.y, GUN_POINT.x, GUN_POINT.y,1000,3,
+                1f,1f,rotation,0,0,1000,3,false,false);
     }
 
     // @param deltaT , time between this and the last frame in seconds?
     public void update(double deltaT, Point mouseAim){
         gunAngle = calculateAngle(mouseAim, GUN_POINT);
-
         // If the gun is firing
         if (fireTimeLeft > 0.0) {
             // Gun is currently firing
