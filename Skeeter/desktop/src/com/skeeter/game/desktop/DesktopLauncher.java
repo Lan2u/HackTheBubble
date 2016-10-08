@@ -7,6 +7,9 @@ import com.skeeter.game.Skeeter;
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
+		config.width = 800; // Application width
+        config.height = 450; // Application height
+        // 800 by 450 pixels
 		new LwjglApplication(new Skeeter(), config);
 	}
 }
