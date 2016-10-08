@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.Cursor;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.skeeter.birds.Pheasant;
 import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 
 import java.awt.*;
@@ -37,9 +38,9 @@ public class Skeeter extends ApplicationAdapter implements InputProcessor{
 	public void create () {
         batch = new SpriteBatch();
 
-        String bckPath = "/core/assets/backImg.png";
-        String gunPath = "/core/assets/gun.png";
-        String guyPath = "/core/assets/shooter.png";
+        String bckPath = "backImg.png";
+        String gunPath = "gun.png";
+        String guyPath = "shooter.png";
 
         AssetManager assetManager = new AssetManager();
         assetManager.load(bckPath, Texture.class);
@@ -53,6 +54,9 @@ public class Skeeter extends ApplicationAdapter implements InputProcessor{
         backTex = assetManager.get(bckPath, Texture.class);
 
         shooter = new Shooter(shooterTex,gunTex);
+
+        Pheasant pheasant = new Pheasant(new Texture("badlogic.jpg"));
+        sprites.add(pheasant);
 
         //http://gamedev.stackexchange.com/questions/63326/libgdx-inputlistenner-not-working
         Gdx.input.setInputProcessor(this);
@@ -108,7 +112,6 @@ public class Skeeter extends ApplicationAdapter implements InputProcessor{
     @Override
     public boolean keyDown(int keycode) {
         if (keycode == Input.Keys.SPACE){
-            System.out.println("Space pressed");
             fire();
         }
         return false;
