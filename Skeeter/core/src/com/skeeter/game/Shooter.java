@@ -15,8 +15,8 @@ public class Shooter extends GameSprite{
 
     private final Point GUN_POINT = new Point(40,30); // Gun position
 
-    private static final int GUN_WIDTH = 60;
-    private static final int GUN_HEIGHT = 10;
+    private static final int GUN_WIDTH = 64;
+    private static final int GUN_HEIGHT = 40;
 
     private final int X_POS = 100; // The shooter doesn't move so theses are constants
     private final int Y_POS = 50;
@@ -39,8 +39,7 @@ public class Shooter extends GameSprite{
 
     private void simpleGunDraw(Batch batch, Texture tex){ // Called to draw the gun, Simple because it only needs the texture
         int rotation = (int) Math.round(360.0 - gunAngle);
-
-        batch.draw(tex, GUN_POINT.x, GUN_POINT.y, GUN_POINT.x, GUN_POINT.y + (GUN_HEIGHT/2),GUN_WIDTH,GUN_HEIGHT,
+        batch.draw(tex, GUN_POINT.x, GUN_POINT.y, GUN_POINT.x, GUN_POINT.y,GUN_WIDTH,GUN_HEIGHT,
                 1f,1f,rotation,0,0,GUN_WIDTH,GUN_HEIGHT,false,false);
     }
 
@@ -72,8 +71,17 @@ public class Shooter extends GameSprite{
     // Calculate the angle of the gun (taking the gun position and the mouse position)
     // Only returns in the range 0.0-1.0
     private double calculateAngle(Point mouseAim, Point gun_point) {
+        // Calculate angle
+        // Return it in degrees
+        //http://stackoverflow.com/questions/3449826/how-do-i-find-the-inverse-tangent-of-a-line
+        double dX = mouseAim.getX() - gun_point.getX();
+        double dY = mouseAim.getY() - gun_point.getY();
 
-        return 0.0;
+        double angle = Math.atan2(dY, dX);
+        angle = 90 - Math.toDegrees(angle);
+        //System.out.println(dX + " , " + dY + " : " + angle);
+        System.out.println(angle);
+        return angle;
     }
 
     // Called when gun fired
