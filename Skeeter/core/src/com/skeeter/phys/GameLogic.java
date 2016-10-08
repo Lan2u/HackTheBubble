@@ -17,7 +17,6 @@ public class GameLogic{
     public static boolean bShot(Point gunPoint, Bird bird, double barrelAngle){
 
         double m = Math.tan(barrelAngle);
-        System.out.println(m);
         Line2D line = new Line2D.Double();
         line.setLine(gunPoint.x, gunPoint.y, FRAME_WIDTH, (int)(FRAME_WIDTH * m));
 

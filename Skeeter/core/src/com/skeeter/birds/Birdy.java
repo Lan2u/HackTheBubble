@@ -22,7 +22,7 @@ public class Birdy extends Bird{
 
     public Birdy(Texture t, int x, int y, int width, int h){
         dx = -40; // Velocity
-        acc = -0.6; // Rate the bird speeds up (carries across bird death)
+        acc = -1; // Rate the bird speeds up (carries across bird death)
         pheasantTexture = t;
         this.x = x;
         this.y = y;
@@ -41,7 +41,6 @@ public class Birdy extends Bird{
     @Override
     public void hit(){
         // called when bird is hit
-        //System.out.println(this.toString() + " was hit");
         Skeeter.score++;
         died();
     }
@@ -50,7 +49,6 @@ public class Birdy extends Bird{
         if (Math.random() < 0.9){
             isWavey = false;
         }else{
-            System.out.println("Wavey");
             isWavey = true;
         }
         x = 700 + Math.random() * X_SPAWN_RANGE;
@@ -72,7 +70,7 @@ public class Birdy extends Bird{
 
         dy += ddy;
         y += dy;
-        dx += Skeeter.acc * dT;
+        dx += acc * dT;
         x = x + dx * dT;
         //y = y + dy * dT;
         if (y <= 0 || y >= 450){

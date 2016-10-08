@@ -43,8 +43,6 @@ public class Skeeter extends ApplicationAdapter implements InputProcessor{
 
     private BitmapFont font;
 
-    public static double acc;
-
 	@Override
 	// Called when the program starts (main)
 	public void create () {
@@ -97,7 +95,6 @@ public class Skeeter extends ApplicationAdapter implements InputProcessor{
         //http://gamedev.stackexchange.com/questions/63326/libgdx-inputlistenner-not-working
         Gdx.input.setInputProcessor(this);
 
-        acc = 0.6;
 	}
 
 	@Override
@@ -199,7 +196,6 @@ public class Skeeter extends ApplicationAdapter implements InputProcessor{
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         if (button == Input.Buttons.LEFT && gameState == 0){
-            System.out.println("Pressed");
             if (playButton.contains(screenX,screenY)){
                 gameState = 1;
             }
@@ -211,7 +207,6 @@ public class Skeeter extends ApplicationAdapter implements InputProcessor{
             if (gameState == 2){
                 for (Bird bird: sprites){
                     bird.kill();
-                    Skeeter.acc = 0;
                     Skeeter.score = 0;
                 }
                 gameState = 0;
@@ -237,7 +232,6 @@ public class Skeeter extends ApplicationAdapter implements InputProcessor{
     }
 
     public static void gameOver() {
-        System.out.println("Game Over");
         gameState = 2;
     }
 }
